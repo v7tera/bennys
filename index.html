@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paleta de Cores Dupla</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        #content {
+            background: #fff;
+            margin: 20px auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .color-picker-wrapper {
+            position: relative;
+            width: 300px;
+            margin: 20px auto;
+        }
+        .color-picker-label {
+            display: inline-block;
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            background-color: #ddd;
+            color: #333;
+            text-align: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .color-picker-label:hover, .color-picker-label:focus {
+            background-color: #ccc;
+            color: #000;
+        }
+        .color-picker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .color-display {
+            width: 100%;
+            height: 150px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            transition: background-color 0.3s ease;
+        }
+        .rgb-value {
+            font-size: 1.2em;
+            margin-top: 15px;
+            color: #333;
+        }
+        @media (max-width: 480px) {
+            #content {
+                padding: 10px;
+            }
+            .color-picker-wrapper {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="content">
+        <h1>Escolha suas cores</h1>
+
+        <!-- Cor 1 -->
+        <div class="color-picker-wrapper">
+            <label class="color-picker-label" for="colorPicker1">Selecione a Cor Primária</label>
+            <input type="color" id="colorPicker1" class="color-picker" value="#000000">
+        </div>
+        <div class="color-display" id="colorDisplay1" style="background-color: #000000;"></div>
+        <p class="rgb-value" id="rgbValue1">RGB(0, 0, 0)</p>
+
+        <!-- Cor 2 -->
+        <div class="color-picker-wrapper">
+            <label class="color-picker-label" for="colorPicker2">Selecione a Cor Secundária</label>
+            <input type="color" id="colorPicker2" class="color-picker" value="#000000">
+        </div>
+        <div class="color-display" id="colorDisplay2" style="background-color: #000000;"></div>
+        <p class="rgb-value" id="rgbValue2">RGB(0, 0, 0)</p>
+    </div>
+
+    <script>
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.slice(1), 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `RGB(${r}, ${g}, ${b})`;
+        }
+
+        function updateColor(colorPickerId, colorDisplayId, rgbValueId) {
+            const colorPicker = document.getElementById(colorPickerId);
+            const colorDisplay = document.getElementById(colorDisplayId);
+            const rgbValue = document.getElementById(rgbValueId);
+
+            colorPicker.addEventListener('input', () => {
+                const selectedColor = colorPicker.value;
+                colorDisplay.style.backgroundColor = selectedColor;
+                rgbValue.textContent = hexToRgb(selectedColor);
+            });
+        }
+
+        // Inicializar atualizações de Cor 1 e Cor 2
+        updateColor('colorPicker1', 'colorDisplay1', 'rgbValue1');
+        updateColor('colorPicker2', 'colorDisplay2', 'rgbValue2');
+    </script>
+</body>
+</html>
